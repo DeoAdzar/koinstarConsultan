@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
@@ -156,7 +157,10 @@ class ChatFragment : Fragment() {
                 )
             )
         } else {
-            displayPicture.setImageBitmap(getConversionImage(setImage))
+            Glide.with(requireContext())
+                .load(setImage)
+                .placeholder(R.drawable.person) // Placeholder image while loading
+                .into(displayPicture)
         }
         switch.setOnClickListener {
             if (status){
@@ -269,8 +273,4 @@ class ChatFragment : Fragment() {
             }
         }
 
-    fun getConversionImage(encodedImage: String?): Bitmap? {
-        val bytes = Base64.decode(encodedImage, Base64.DEFAULT)
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-    }
 }

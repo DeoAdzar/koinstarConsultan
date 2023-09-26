@@ -70,7 +70,7 @@ interface BaseApiService {
     @POST("profile/photo/update")
     fun updateImageProfile (
         @Header("Authorization") token: String,
-        @Field("image") image:String,
+        @Part image: MultipartBody.Part,
     ): Call<ResponseBody>
     // ================= PROFILE ===================
 

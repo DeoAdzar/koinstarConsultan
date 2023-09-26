@@ -20,6 +20,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.trial.koinstar.consultan.v2.R
 import com.trial.koinstar.consultan.v2.activity.ChangePasswordActivity
 import com.trial.koinstar.consultan.v2.activity.ChangeProfileActivity
@@ -31,6 +32,9 @@ import com.trial.koinstar.consultan.v2.utils.ImageConverter
 import com.trial.koinstar.v2.utils.ConstantString
 import com.trial.koinstar.v2.utils.SharedPreferencesManager
 import de.hdodenhof.circleimageview.CircleImageView
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONException
@@ -38,6 +42,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 import java.io.IOException
 
 class SettingFragment : Fragment() {
@@ -142,7 +147,10 @@ class SettingFragment : Fragment() {
                             if (setImage == "null"||setImage.isEmpty()){
                                 ivProfil.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.person))
                             }else{
-                                ivProfil.setImageBitmap(getConversionImage(setImage))
+                                Glide.with(requireContext())
+                                    .load(setImage)
+                                    .placeholder(R.drawable.person) // Placeholder image while loading
+                                    .into(ivProfil)
                             }
                             tvOrigin.text = if (setOrigin == "null"||setOrigin.isEmpty()) "" else setOrigin
                             updateProfile.setOnClickListener{ startActivityForResult(Intent(mContext, ChangeProfileActivity::class.java)
@@ -179,11 +187,16 @@ class SettingFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-            val selectedImageUri = data.data
+            val imageUri = data.data
 
             // Set the selected image to the ImageView
-            if (selectedImageUri!=null) {
-                save(selectedImageUri)
+            if (imageUri!=null) {
+                val file = File(getRealPathFromURI(imageUri))
+                val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+                val imagePart = MultipartBody.Part.createFormData("image", file.name, requestFile)
+
+                // Panggil method untuk mengirim gambar ke API
+                save(imagePart,imageUri)
             }
         }else if (requestCode == CHANGE_PROFILE && resultCode == Activity.RESULT_OK && data != null) {
             if (data.getBooleanExtra("dataInserted", false)) {
@@ -191,79 +204,86 @@ class SettingFragment : Fragment() {
             }
         }
     }
-    private fun save(selectedImageUri: Uri) {
-        val base64Image = ImageConverter().uriToBase64(requireContext(),selectedImageUri)
-        if (!base64Image.isNullOrEmpty()) {
-            val update: Call<ResponseBody> =
-                baseApiService.updateImageProfile("$token_type $token", base64Image)
-            update.enqueue(object : Callback<ResponseBody> {
-                @SuppressLint("SetTextI18n")
-                override fun onResponse(
-                    call: Call<ResponseBody>,
-                    response: Response<ResponseBody>
-                ) {
-                    if (response.code() == 200) {
-                        try {
-                            val jsonResult = JSONObject(response.body()!!.string())
-                            if (jsonResult.getString("status").equals("Success")) {
-//                                val mainActivityView = (activity as MainActivity)
-//                                mainActivityView.refresh("$token_type $token", 2)
-                                ivProfil.setImageURI(selectedImageUri)
-                                Toast.makeText(
-                                    requireContext(),
-                                    getString(R.string.toast_update_image_success),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            } else {
-                                Toast.makeText(
-                                    requireContext(),
-                                    jsonResult.getString("message"),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        } catch (e: JSONException) {
-                            e.printStackTrace()
-                        } catch (e: IOException) {
-                            e.printStackTrace()
-                        }
-                    } else if (response.code() == 400) {
-                        val image = "image"
-                        val jsonResult: JSONObject?
-                        var objectImage: JSONArray? = null
-                        try {
-                            jsonResult = JSONObject(response.errorBody()!!.string())
-                            try {
-                                if (jsonResult.getString("status").equals("Error")) {
-                                    objectImage =
-                                        jsonResult.getJSONObject("message").getJSONArray(image);
-                                }
-                            } catch (e: JSONException) {
-                                e.printStackTrace()
-                            }
-                        } catch (e: JSONException) {
-                            e.printStackTrace()
-                        }
-
-                        if (objectImage != null) {
+    private fun getRealPathFromURI(uri: android.net.Uri): String {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = requireContext().contentResolver.query(uri, projection, null, null, null)
+        val column_index = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        cursor.moveToFirst()
+        val result = cursor.getString(column_index)
+        cursor.close()
+        return result
+    }
+    private fun save(imagePart: MultipartBody.Part, imageUri: Uri) {
+        val update: Call<ResponseBody> =
+            baseApiService.updateImageProfile("$token_type $token", imagePart)
+        update.enqueue(object : Callback<ResponseBody> {
+            @SuppressLint("SetTextI18n")
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                if (response.code() == 200) {
+                    try {
+                        val jsonResult = JSONObject(response.body()!!.string())
+                        if (jsonResult.getString("status").equals("Success")) {
+                            Glide.with(requireContext())
+                                .load(imageUri)
+                                .placeholder(R.drawable.person) // Placeholder image while loading
+                                .into(ivProfil)
                             Toast.makeText(
                                 requireContext(),
-                                objectImage.getString(0), Toast.LENGTH_SHORT
+                                getString(R.string.toast_update_image_success),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                jsonResult.getString("message"),
+                                Toast.LENGTH_SHORT
                             ).show()
                         }
-                    } else {
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                } else if (response.code() == 400) {
+                    val image = "image"
+                    val jsonResult: JSONObject?
+                    var objectImage: JSONArray? = null
+                    try {
+                        jsonResult = JSONObject(response.errorBody()!!.string())
+                        try {
+                            if (jsonResult.getString("status").equals("Error")) {
+                                objectImage =
+                                    jsonResult.getJSONObject("message").getJSONArray(image);
+                            }
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+
+                    if (objectImage != null) {
                         Toast.makeText(
                             requireContext(),
-                            getString(R.string.error_default),
-                            Toast.LENGTH_SHORT
+                            objectImage.getString(0), Toast.LENGTH_SHORT
                         ).show()
                     }
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.error_default),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+            }
 
-                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-                }
-            })
-        }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
     private fun requestLogout() {
         val getUser: Call<ResponseBody> = baseApiService.logout("$token_type $token")
@@ -292,8 +312,4 @@ class SettingFragment : Fragment() {
         })
     }
 
-    fun getConversionImage(encodedImage: String?): Bitmap? {
-        val bytes = Base64.decode(encodedImage, Base64.DEFAULT)
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-    }
 }
