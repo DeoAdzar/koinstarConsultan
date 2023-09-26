@@ -1,0 +1,134 @@
+{
+  "project_info": {
+    "project_number": "367778751463",
+    "project_id": "koinstar-fe1d7",
+    "storage_bucket": "koinstar-fe1d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367778751463:android:fc554a9b33b64045839342",
+        "android_client_info": {
+          "package_name": "com.example.konseling"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367778751463-07ie15pu1hudkocinvghlj7hsbigaj5n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbTw7LCIkyKSlR10JxzWwurPKBQgAXRrU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367778751463-07ie15pu1hudkocinvghlj7hsbigaj5n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367778751463:android:fd98da0dca2625d8839342",
+        "android_client_info": {
+          "package_name": "com.trial.koinstar.consultan.kotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367778751463-07ie15pu1hudkocinvghlj7hsbigaj5n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbTw7LCIkyKSlR10JxzWwurPKBQgAXRrU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367778751463-07ie15pu1hudkocinvghlj7hsbigaj5n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367778751463:android:9411a6113437b048839342",
+        "android_client_info": {
+          "package_name": "com.trial.koinstar.consultan.v2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367778751463-07ie15pu1hudkocinvghlj7hsbigaj5n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbTw7LCIkyKSlR10JxzWwurPKBQgAXRrU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367778751463-07ie15pu1hudkocinvghlj7hsbigaj5n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367778751463:android:fe289415445fbd20839342",
+        "android_client_info": {
+          "package_name": "com.trial.koinstar.kotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367778751463-buf6388qvc9u8n9qkkue8h4h5n4m3iko.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trial.koinstar.kotlin",
+            "certificate_hash": "c4c1588798e5af23f6ddf49fbf2a338a03be1369"
+          }
+        },
+        {
+          "client_id": "367778751463-07ie15pu1hudkocinvghlj7hsbigaj5n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbTw7LCIkyKSlR10JxzWwurPKBQgAXRrU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367778751463-07ie15pu1hudkocinvghlj7hsbigaj5n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingVertical="5dp"
+    android:paddingHorizontal="5dp"
+    android:paddingRight="100dp">
+
+    <TextView
+        android:id="@+id/textPesan2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/white"
+        android:background="@drawable/chat_send_background"
+        android:padding="@dimen/_10sdp"
+        android:textSize="@dimen/_13ssp"
+        android:maxWidth="@dimen/_250sdp"
+        android:text="Haloaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
+    <TextView
+        android:id="@+id/time_receive2"
+        android:layout_below="@id/textPesan2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textSize="@dimen/_8ssp"
+        android:text="12-12-2020 10:05"
+        />
+</RelativeLayout>
