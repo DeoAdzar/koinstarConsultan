@@ -66,7 +66,7 @@ interface BaseApiService {
         @Field("confirm_password") confirm:String,
     ): Call<ResponseBody>
 
-    @FormUrlEncoded
+    @Multipart
     @POST("profile/photo/update")
     fun updateImageProfile (
         @Header("Authorization") token: String,

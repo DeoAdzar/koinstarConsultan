@@ -70,13 +70,12 @@ class LoginActivity : AppCompatActivity() {
                         val jsonResult = JSONObject(response.body()!!.string())
                         if (jsonResult.getString("status").equals("Success")){
                             val token = jsonResult.getString("data")
-
+                            sharedPref.createSession(token)
                             val intent = Intent(applicationContext, MainActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             startActivity(intent)
                             finish()
-                            sharedPref.createSession(token)
                         }
                     }catch (e: JSONException){
                         e.printStackTrace()

@@ -69,41 +69,8 @@ class MainActivity : AppCompatActivity() {
         token_type = ConstantString().AUTH_TYPE
 
         getUser()
-        sessionManager.customAddBool("REFRESH_USER_DETAIL_CHAT",false)
-        sessionManager.customAddBool("REFRESH_USER_DETAIL_SETTING",false)
 
-        menuChatSelected()
 
-        binding.menuChat.setOnClickListener{
-            if (isClickableChat) {
-                // Disable button and set isClickable to false
-                isClickableChat = false
-
-                // Enable button after delayMillis
-                Handler(Looper.getMainLooper()).postDelayed({
-                    isClickableChat = true
-                }, delayMillis)
-
-                menuChatSelected()
-                // Place your click action here
-                // Example: showToast()
-            }
-        }
-        binding.menuSetting.setOnClickListener{
-            if (isClickableSetting) {
-                // Disable button and set isClickable to false
-                isClickableSetting = false
-
-                // Enable button after delayMillis
-                Handler(Looper.getMainLooper()).postDelayed({
-                    isClickableSetting = true
-                }, delayMillis)
-
-                menuSettingSelected()
-                // Place your click action here
-                // Example: showToast()
-            }
-        }
 
     }
 
@@ -122,6 +89,39 @@ class MainActivity : AppCompatActivity() {
                                 sessionManager.addId(jsonObject.getInt("id").toString())
                             }
                             customLoading.dismiss()
+
+                            menuChatSelected()
+
+                            binding.menuChat.setOnClickListener{
+                                if (isClickableChat) {
+                                    // Disable button and set isClickable to false
+                                    isClickableChat = false
+
+                                    // Enable button after delayMillis
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        isClickableChat = true
+                                    }, delayMillis)
+
+                                    menuChatSelected()
+                                    // Place your click action here
+                                    // Example: showToast()
+                                }
+                            }
+                            binding.menuSetting.setOnClickListener{
+                                if (isClickableSetting) {
+                                    // Disable button and set isClickable to false
+                                    isClickableSetting = false
+
+                                    // Enable button after delayMillis
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        isClickableSetting = true
+                                    }, delayMillis)
+
+                                    menuSettingSelected()
+                                    // Place your click action here
+                                    // Example: showToast()
+                                }
+                            }
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()

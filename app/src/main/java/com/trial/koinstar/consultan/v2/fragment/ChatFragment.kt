@@ -97,7 +97,6 @@ class ChatFragment : Fragment() {
         token_type = ConstantString().AUTH_TYPE
         database = FirebaseFirestore.getInstance()
         getUser()
-
     }
 
     private fun listenerConversion() {
@@ -118,7 +117,6 @@ class ChatFragment : Fragment() {
                             setImage = jsonResult.getJSONObject("data").getString("image")
                             setStts = jsonResult.getJSONObject("data").getInt("status")
                             initialize()
-                            listenerConversion()
 
                         }
                     } catch (e: JSONException) {
@@ -169,7 +167,7 @@ class ChatFragment : Fragment() {
                 setStatus(true)
             }
         }
-        Log.d("id", "onCreateView: $idUser")
+        listenerConversion()
     }
 
     private fun setStatus (boolean: Boolean){

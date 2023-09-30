@@ -87,10 +87,10 @@ class SharedPreferencesManager (var context: Context){
         return pref.getBoolean(key, default)
     }
     companion object {
-        private const val prefName = "crudpref"
-        private const val isLogin = "isLogin"
-        const val keyId = "keyid"
-        const val keyToken = "keytoken"
+        private const val prefName = "crudprefteacher"
+        private const val isLogin = "isLoginTeacer"
+        const val keyId = "keyTeacherid"
+        const val keyToken = "keyTeachertoken"
 //        const val keyTokenType = "keytokentype"
     }
 }
