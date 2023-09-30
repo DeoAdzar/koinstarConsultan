@@ -99,4 +99,5 @@
     <string name="profession">Profession</string>
     <string name="toast_update_image_success">Image has been updated</string>
     <string name="toast_update_profile_success">Profile has been updated</string>
+    <string name="no_data_chat">No chat yet</string>
 </resources>

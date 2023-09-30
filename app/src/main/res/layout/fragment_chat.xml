@@ -104,4 +104,21 @@
         android:orientation="vertical"
         tools:listitem="@layout/rv_item_chat"
         />
+    <LinearLayout
+        android:id="@+id/emptyContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/nunito_semibold"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/color_font"
+            android:text="@string/no_data_chat"/>
+    </LinearLayout>
 </LinearLayout>

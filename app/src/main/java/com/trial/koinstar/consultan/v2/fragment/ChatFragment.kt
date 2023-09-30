@@ -69,6 +69,7 @@ class ChatFragment : Fragment() {
 //    lateinit var setId:String
      var setImage:String = ""
     var setStts:Int = 0
+    lateinit var emptyContainer: LinearLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,6 +78,7 @@ class ChatFragment : Fragment() {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_chat, container, false)
         loadingContainer = v.findViewById(R.id.loadingContainer)
+        emptyContainer = v.findViewById(R.id.emptyContainer)
         header = v.findViewById(R.id.header)
         recyclerView = v.findViewById(R.id.recyclerView)
         displayPicture = v.findViewById(R.id.picture)
@@ -168,6 +170,7 @@ class ChatFragment : Fragment() {
             }
         }
         listenerConversion()
+
     }
 
     private fun setStatus (boolean: Boolean){
@@ -257,14 +260,21 @@ class ChatFragment : Fragment() {
                     }
                 }
                 Log.d("conversationSize", "eventListener: ${chatMessageList.size}")
+                if (chatMessageList.size>0){
+                    recyclerView.visibility = View.VISIBLE
+                    emptyContainer.visibility = View.GONE
+                }else{
+                    recyclerView.visibility = View.GONE
+                    emptyContainer.visibility = View.VISIBLE
+                }
                 Collections.sort(chatMessageList,
                     java.util.Comparator<chatObject> { obj1: chatObject, obj2: chatObject ->
                         obj2.dateObject!!.compareTo(
                             obj1.dateObject
                         )
                     })
+
                 loadingContainer.visibility = View.GONE
-                recyclerView.visibility = View.VISIBLE
                 header.visibility = View.VISIBLE
                 recentAdapter!!.notifyDataSetChanged()
                 recyclerView.smoothScrollToPosition(0)

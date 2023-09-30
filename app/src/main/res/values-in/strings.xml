@@ -96,4 +96,5 @@
     <string name="profession">Profesi</string>
     <string name="toast_update_image_success">Gambar telah diperbarui</string>
     <string name="toast_update_profile_success">Profile telah diperbarui</string>
+    <string name="no_data_chat">Belum ada pesan</string>
 </resources>
