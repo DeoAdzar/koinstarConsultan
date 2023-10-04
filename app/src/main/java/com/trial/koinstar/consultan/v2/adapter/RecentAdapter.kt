@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.trial.koinstar.consultan.v2.R
 import com.trial.koinstar.consultan.v2.activity.ChatActivity
 import com.trial.koinstar.consultan.v2.databinding.RvItemChatBinding
@@ -61,7 +62,10 @@ class RecentAdapter(chatMessageList: List<chatObject>, ctx: Context) :
             if (chatMessage.conversionImage.isNullOrEmpty()||chatMessage.conversionImage == "null"||chatMessage.conversionImage == ""||chatMessage.conversionImage.isNullOrBlank()){
                 binding.ivRecentChat.setImageDrawable(ContextCompat.getDrawable(ctx, R.drawable.person))
             }else {
-                binding.ivRecentChat.setImageBitmap(getConversionImage(chatMessage.conversionImage))
+                Glide.with(ctx)
+                    .load(chatMessage.conversionImage)
+                    .placeholder(R.drawable.person) // Placeholder image while loading
+                    .into(binding.ivRecentChat)
             }
             binding.tvNameRecent.text = chatMessage.conversionName
             binding.tvMessageRecent.text = chatMessage.message
@@ -72,10 +76,6 @@ class RecentAdapter(chatMessageList: List<chatObject>, ctx: Context) :
 //                user.image = chatMessage.conversionImage;
 //                conversionListener.onConversionClick(user);
 //            });
-        }
-        private fun getConversionImage(encodedImage: String?): Bitmap {
-            val bytes = Base64.decode(encodedImage, Base64.DEFAULT)
-            return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
         }
     }
 
