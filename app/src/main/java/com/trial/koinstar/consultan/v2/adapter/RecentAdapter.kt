@@ -41,6 +41,7 @@ class RecentAdapter(chatMessageList: List<chatObject>, ctx: Context) :
             val i = Intent(ctx, ChatActivity::class.java)
             i.putExtra("idKonsultan", chatMessageList[position].conversionId)
             i.putExtra("namaKonsultan", chatMessageList[position].conversionName)
+            i.putExtra("imageKonsultan", chatMessageList[position].conversionImage)
             ctx.startActivity(i)
         }
     }

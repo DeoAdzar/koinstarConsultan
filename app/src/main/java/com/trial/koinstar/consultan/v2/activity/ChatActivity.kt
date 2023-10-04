@@ -215,14 +215,10 @@ class ChatActivity : AppCompatActivity() {
             binding.picture.setImageDrawable(ContextCompat.getDrawable(applicationContext,R.drawable.person))
         }else{
             Glide.with(applicationContext)
-                .load(getConversionImage(imageKonsultan))
+                .load(imageKonsultan)
                 .placeholder(R.drawable.person)
                 .centerInside()
                 .into(binding.picture)
         }
-    }
-    private fun getConversionImage(encodedImage: String?): Bitmap? {
-        val bytes = Base64.decode(encodedImage, Base64.DEFAULT)
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
     }
 }
